@@ -29,6 +29,8 @@ class AppTheme {
         borderRadius: BorderRadius.circular(2),
       ),
     ),
+    primaryTextTheme: textTheme,
+    splashColor: AppColor.light.primaryColor,
     extensions: const <ThemeExtension<dynamic>>[
       AppColor.light,
     ],
@@ -47,53 +49,62 @@ class AppTheme {
   );
 
   static TextTheme textTheme = TextTheme(
-    headlineLarge: GoogleFonts.rubik(
+    headlineLarge: GoogleFonts.poppins(
       fontSize: 24,
       fontWeight: FontWeight.w600,
       color: AppColor.light.darkMutedColor,
     ),
-    headlineMedium: GoogleFonts.rubik(
+    headlineMedium: GoogleFonts.poppins(
       fontSize: 20,
       fontWeight: FontWeight.w600,
       color: AppColor.light.darkMutedColor,
     ),
-    displayLarge: GoogleFonts.rubik(
+    displayLarge: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       color: AppColor.light.darkMutedColor,
     ),
-    displayMedium: GoogleFonts.rubik(
+    displayMedium: GoogleFonts.poppins(
       fontSize: 14,
       height: 1.5,
       fontWeight: FontWeight.w500,
       color: AppColor.light.darkMutedColor,
     ),
-    bodyMedium: GoogleFonts.rubik(
+    bodyMedium: GoogleFonts.poppins(
       fontSize: 12,
       height: 1.5,
       fontWeight: FontWeight.w400,
       color: AppColor.light.greySmoke,
     ),
-    bodySmall: GoogleFonts.rubik(
+    bodySmall: GoogleFonts.poppins(
       fontSize: 10,
       height: 1.5,
       fontWeight: FontWeight.w400,
       color: AppColor.light.greySmoke,
     ),
-    titleLarge: GoogleFonts.rubik(
+    titleLarge: GoogleFonts.poppins(
       fontSize: 16,
+      height: 1.5,
       fontWeight: FontWeight.w400,
       color: AppColor.light.textMutedColor,
     ),
-    titleMedium: GoogleFonts.rubik(
+    titleMedium: GoogleFonts.poppins(
       fontSize: 14,
+      height: 1.5,
       fontWeight: FontWeight.w400,
       color: AppColor.light.textMutedColor,
     ),
-    labelLarge: GoogleFonts.rubik(
+    labelLarge: GoogleFonts.poppins(
       fontSize: 16,
+      height: 1.5,
       fontWeight: FontWeight.w600,
       color: AppColor.light.background1,
+    ),
+    labelMedium: GoogleFonts.poppins(
+      fontSize: 14,
+      height: 1.5,
+      fontWeight: FontWeight.w600,
+      color: AppColor.light.greySmoke,
     ),
   );
 }
