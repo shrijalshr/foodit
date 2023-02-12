@@ -108,7 +108,7 @@ class AppColor extends ThemeExtension<AppColor> {
 
   ///For [LightTheme]
   static const light = AppColor(
-    primaryColor: Color.fromARGB(255, 255, 138, 48),
+    primaryColor: Color(0xffFE724C),
     background1: Color(0xffffffff),
     background2: Color(0xffF6F6F6),
     infoColor: Color(0xff2f80ed),
