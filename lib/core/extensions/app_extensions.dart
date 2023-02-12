@@ -99,6 +99,13 @@ extension MobileValidation on String {
     if (!startsWith('98') || !startsWith('97')) return false;
     return true;
   }
+
+  bool isEmail() {
+    RegExp emailReg = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    bool isValid = emailReg.hasMatch(this);
+    return isValid;
+  }
 }
 
 extension NumberValidation on String {
