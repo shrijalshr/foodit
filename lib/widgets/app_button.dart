@@ -22,7 +22,7 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     required this.label,
     this.height = 52,
-    this.borderRadius = 4,
+    this.borderRadius = 8,
     this.elevation = 0,
     this.padding = const EdgeInsets.symmetric(
       vertical: 16,
