@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
+import 'package:foodit/core/routes/routes.dart';
 import 'package:foodit/widgets/app_button.dart';
 import 'package:foodit/widgets/my_textfield.dart';
 import 'package:foodit/widgets/password_field/password_field.dart';
@@ -97,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AppButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
+                            Navigator.pushNamed(context, Routes.homescreen);
                           },
                           label: "Login")
                       .pb(8),
