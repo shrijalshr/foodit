@@ -9,19 +9,19 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
         elevation: 0,
-        backgroundColor: AppColor.light.darkColor,
-        foregroundColor: AppColor.light.background1,
-        iconTheme: IconThemeData(color: AppColor.light.background1),
+        backgroundColor: AppColor.light.white,
+        foregroundColor: AppColor.light.primaryColor,
+        iconTheme: IconThemeData(color: AppColor.light.darkGrey),
         centerTitle: false,
         titleTextStyle: textTheme.displayLarge!.apply(
-          color: AppColor.light.background1,
+          color: AppColor.light.darkGrey,
           // fontSizeDelta: 18,
         ),
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColor.light.darkColor,
+          statusBarColor: AppColor.light.white,
         )),
     primaryColor: AppColor.light.primaryColor,
-    scaffoldBackgroundColor: AppColor.light.background2,
+    scaffoldBackgroundColor: AppColor.light.backgroundColor,
     textTheme: textTheme,
     checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStatePropertyAll(AppColor.light.primaryColor),
@@ -37,74 +37,74 @@ class AppTheme {
     colorScheme: ColorScheme(
         brightness: Brightness.light,
         primary: AppColor.light.primaryColor,
-        surface: AppColor.light.background1,
-        onSurface: AppColor.light.background1,
+        surface: AppColor.light.backgroundColor,
+        onSurface: AppColor.light.lightGrey,
         error: AppColor.light.errorColor,
-        background: AppColor.light.background2,
-        onBackground: AppColor.light.background2,
+        background: AppColor.light.backgroundColor,
+        onBackground: AppColor.light.lightGrey,
         onPrimary: AppColor.light.primaryColor,
-        secondary: AppColor.light.darkColor,
+        secondary: AppColor.light.secondaryColor,
         onError: AppColor.light.errorColor,
-        onSecondary: AppColor.light.darkColor),
+        onSecondary: AppColor.light.mistGrey),
   );
 
   static TextTheme textTheme = TextTheme(
     headlineLarge: GoogleFonts.poppins(
       fontSize: 24,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.darkMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     headlineMedium: GoogleFonts.poppins(
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.darkMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     displayLarge: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w500,
-      color: AppColor.light.darkMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     displayMedium: GoogleFonts.poppins(
       fontSize: 14,
       height: 1.5,
       fontWeight: FontWeight.w500,
-      color: AppColor.light.darkMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     bodyMedium: GoogleFonts.poppins(
       fontSize: 12,
       height: 1.5,
       fontWeight: FontWeight.w400,
-      color: AppColor.light.greySmoke,
+      color: AppColor.light.lightGrey,
     ),
     bodySmall: GoogleFonts.poppins(
       fontSize: 10,
       height: 1.5,
       fontWeight: FontWeight.w400,
-      color: AppColor.light.greySmoke,
+      color: AppColor.light.lightGrey,
     ),
     titleLarge: GoogleFonts.poppins(
       fontSize: 16,
       height: 1.5,
       fontWeight: FontWeight.w400,
-      color: AppColor.light.textMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     titleMedium: GoogleFonts.poppins(
       fontSize: 14,
       height: 1.5,
       fontWeight: FontWeight.w400,
-      color: AppColor.light.textMutedColor,
+      color: AppColor.light.darkGrey,
     ),
     labelLarge: GoogleFonts.poppins(
       fontSize: 16,
       height: 1.5,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.background1,
+      color: AppColor.light.whiteSmoke,
     ),
     labelMedium: GoogleFonts.poppins(
       fontSize: 14,
       height: 1.5,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.greySmoke,
+      color: AppColor.light.whiteSmoke,
     ),
   );
 }

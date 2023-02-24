@@ -103,12 +103,12 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonState == AppButtonState.primary
             ? appColor.primaryColor
-            : appColor.background1,
+            : appColor.backgroundColor,
         foregroundColor: buttonState == AppButtonState.primary
-            ? appColor.background1
+            ? appColor.backgroundColor
             : appColor.primaryColor,
         disabledBackgroundColor: appColor.primaryColor.withOpacity(0.5),
-        disabledForegroundColor: appColor.background1,
+        disabledForegroundColor: appColor.backgroundColor,
         elevation: elevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
@@ -127,7 +127,7 @@ class AppButton extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.labelLarge!.apply(
                 color: buttonState == AppButtonState.primary
-                    ? appColor.background1
+                    ? appColor.backgroundColor
                     : appColor.primaryColor,
               ),
         ),

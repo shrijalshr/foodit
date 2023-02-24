@@ -59,12 +59,12 @@ class MyTextField extends StatelessWidget {
       textInputAction: textInputAction,
       maxLines: maxLines,
       style: TextStyle(
-        color: color.darkColor,
+        color: color.darkGrey,
       ),
       decoration: InputDecoration(
-        fillColor: color.whiteWater,
+        fillColor: color.mistGrey,
         filled: true,
-        focusColor: color.whiteWater,
+        focusColor: color.mistGrey,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(borderRadius ?? 10),

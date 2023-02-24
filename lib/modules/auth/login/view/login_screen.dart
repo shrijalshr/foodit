@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Theme.of(context).extension<AppColor>() ?? AppColor.light;
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: color.background1,
+      backgroundColor: color.backgroundColor,
       appBar: null,
       body: Stack(
         children: [
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Order your food with ease",
                     style: textTheme.bodyMedium
-                        ?.apply(color: color.greySmoke, fontWeightDelta: 300),
+                        ?.apply(color: color.lightGrey, fontWeightDelta: 300),
                   ).pb(24),
                   MyTextField(
                     validator: (value) {
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "OR",
                         style: textTheme.bodyLarge?.apply(
-                            color: color.greySmoke, fontWeightDelta: 300),
+                            color: color.mistGrey, fontWeightDelta: 300),
                       ).ph(8),
                       const Expanded(child: Divider())
                     ],
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: color.whiteWater, elevation: 0),
+                        backgroundColor: color.mistGrey, elevation: 0),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),

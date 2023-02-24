@@ -38,7 +38,7 @@ class PasswordField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: color.whiteWater,
+        fillColor: color.mistGrey,
         border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(10)),

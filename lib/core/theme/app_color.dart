@@ -86,6 +86,18 @@ class AppColor extends ThemeExtension<AppColor> {
     );
   }
 
-
-  static const AppColor light =AppColor(primaryColor: primaryColor, secondaryColor: secondaryColor, backgroundColor: backgroundColor, darkGrey: darkGrey, lightGrey: lightGrey, mistGrey: mistGrey, whiteSmoke: whiteSmoke, white: white, successColor: successColor, errorColor: errorColor, infoColor: infoColor, warningColor: warningColor) 
+  static const AppColor light = AppColor(
+    primaryColor: Color(0xffFE724C),
+    secondaryColor: Color(0xffffc529),
+    backgroundColor: Color(0xfff7f7fb),
+    darkGrey: Color(0xff1A1D26),
+    lightGrey: Color(0xff9A9FAE),
+    mistGrey: Color(0x00dfe2e5),
+    whiteSmoke: Color(0xfffcfcfc),
+    white: Color(0xffffffff),
+    successColor: Color(0xff0b735f),
+    errorColor: Color(0xffFC4141),
+    infoColor: Color(0xff2F80ED),
+    warningColor: Color(0xffEE961B),
+  );
 }
