@@ -92,7 +92,7 @@ class AppColor extends ThemeExtension<AppColor> {
     backgroundColor: Color(0xfff7f7fb),
     darkGrey: Color(0xff1A1D26),
     lightGrey: Color(0xff9A9FAE),
-    mistGrey: Color(0x00dfe2e5),
+    mistGrey: Color.fromARGB(0, 194, 194, 194),
     whiteSmoke: Color(0xfffcfcfc),
     white: Color(0xffffffff),
     successColor: Color(0xff0b735f),
