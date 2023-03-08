@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:foodit/core/theme/app_color.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/responsive/screen_util.dart';
@@ -110,6 +111,11 @@ extension MobileValidation on String {
 
 extension NumberValidation on String {
   //TODO: Add isNaN method later
+}
+
+extension ContextExtention on BuildContext {
+  TextTheme get textTheme => Theme.of(this).textTheme;
+  AppColor get color => Theme.of(this).extension<AppColor>() ?? AppColor.light;
 }
 
 extension DateFormatter on DateTime? {
