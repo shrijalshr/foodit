@@ -62,7 +62,7 @@ class MyTextField extends StatelessWidget {
         color: color.darkGrey,
       ),
       decoration: InputDecoration(
-        fillColor: color.mistGrey,
+        fillColor: color.white,
         filled: true,
         focusColor: color.mistGrey,
         border: OutlineInputBorder(
