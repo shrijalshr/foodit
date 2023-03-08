@@ -11,10 +11,10 @@ class AppTheme {
         elevation: 0,
         backgroundColor: AppColor.light.white,
         foregroundColor: AppColor.light.primaryColor,
-        iconTheme: IconThemeData(color: AppColor.light.darkGrey),
+        iconTheme: IconThemeData(color: AppColor.light.primaryColor),
         centerTitle: false,
         titleTextStyle: textTheme.displayLarge!.apply(
-          color: AppColor.light.darkGrey,
+          color: AppColor.light.primaryColor,
           // fontSizeDelta: 18,
         ),
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -98,13 +98,13 @@ class AppTheme {
       fontSize: 16,
       height: 1.5,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.whiteSmoke,
+      color: AppColor.light.lightGrey,
     ),
     labelMedium: GoogleFonts.poppins(
       fontSize: 14,
       height: 1.5,
       fontWeight: FontWeight.w600,
-      color: AppColor.light.whiteSmoke,
+      color: AppColor.light.lightGrey,
     ),
   );
 }
