@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/modules/search_screen/search_screen.dart';
@@ -5,6 +7,8 @@ import 'package:foodit/modules/search_screen/search_screen.dart';
 import '../../../data/models/category.dart';
 
 class HomeProvider with ChangeNotifier {
+
+
   int selectedIndex = 0;
   onNavTap(BuildContext context, int index) {
     if (index == 1) {
@@ -20,7 +24,6 @@ class HomeProvider with ChangeNotifier {
     if (!onHomeScreen) {
       selectedIndex = 0;
     }
-    
     notifyListeners();
   }
 
@@ -35,4 +38,17 @@ class HomeProvider with ChangeNotifier {
     isFav = !value;
     notifyListeners();
   }
+
+  DateTime now1 = DateTime.now();
+  Stream<DateTime> getTime() async* {
+    DateTime now = DateTime.now();
+    Stream<DateTime> timer = Stream.periodic(const Duration(seconds: 1), (i) {
+      now = now.add(const Duration(seconds: 1));
+      return now;
+    });
+    String message = '';
+    yield* timer;
+  
+  }
+
 }
