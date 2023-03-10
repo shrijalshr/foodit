@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
+import 'package:foodit/modules/cart/view/cart_screen.dart';
 import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
   final List<Widget?> pages = [
     const HomeScreenBody(),
     null,
-    const Text("Cart"),
+    const CartScreen(),
     const Text("Fav"),
   ];
 
