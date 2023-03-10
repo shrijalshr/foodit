@@ -4,6 +4,8 @@ import 'package:foodit/core/responsive/screen_util.dart';
 import 'package:foodit/core/routes/route_generator.dart';
 import 'package:foodit/core/theme/app_theme.dart';
 import 'package:foodit/modules/auth/login/view/login_screen.dart';
+import 'package:foodit/modules/homescreen/provider/home_provider.dart';
+import 'package:foodit/modules/item_detail/provider/item_detail_provider.dart';
 import 'package:foodit/widgets/password_field/password_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +31,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => PasswordProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ItemDetailProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeProvider(),
         ),
       ],
       child: MaterialApp(
