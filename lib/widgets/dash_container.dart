@@ -26,7 +26,7 @@ class DashContainer extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: color!,
-        borderRadius: BorderRadius.circular(borderRadius ?? 5),
+        borderRadius: BorderRadius.circular(borderRadius ?? 8),
         border: border,
       ),
       width: width,
