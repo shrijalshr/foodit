@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
 import 'package:foodit/modules/cart/view/cart_screen.dart';
+import 'package:foodit/modules/favorite/view/favorite_screen.dart';
 import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,11 +21,11 @@ class HomeScreen extends StatelessWidget {
     Icon(Icons.favorite_outline, size: 24),
   ];
 
-  final List<Widget?> pages = [
+  final List<Widget> pages = [
     const HomeScreenBody(),
-    null,
+    const SizedBox(),
     const CartScreen(),
-    const Text("Fav"),
+    const FavoriteScreen()
   ];
 
   //State class
@@ -34,34 +35,26 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("FoodIt"),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.person_2_outlined,
-              ),
-            ),
-          ],
-        ),
-        drawer: const Drawer(),
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.transparent,
           height: 56,
+          index: context.read<HomeProvider>().selectedIndex,
           animationDuration: const Duration(milliseconds: 200),
           items: navIconList,
           onTap: (index) {
             context.read<HomeProvider>().onNavTap(context, index);
           },
         ),
-        body: pages.elementAt(context.watch<HomeProvider>().selectedIndex));
+        body: WillPopScope(
+            onWillPop: () {
+              context.read<HomeProvider>().checkIfOnHomeScreen();
+              if (!context.read<HomeProvider>().onHomeScreen) {
+                return Future.value(false);
+              }
+              return Future.value(true);
+            },
+            child:
+                pages.elementAt(context.watch<HomeProvider>().selectedIndex)));
   }
 }
 
@@ -72,89 +65,109 @@ class HomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 05.fh,
-          ),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: "Good Morning, ",
-                  style: context.textTheme.headlineMedium,
-                ),
-                TextSpan(
-                  text: "Shrijal",
-                  style: context.textTheme.headlineMedium!
-                      .copyWith(color: context.color.primaryColor),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("FoodIt"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications_outlined,
             ),
-          ).pb(8),
-          Text(
-            "What would you like to have today?",
-            style: context.textTheme.headlineLarge,
-          ).pb(24),
-          const SearchBar().pb(24),
-          Text(
-            "Categories",
-            style: context.textTheme.headlineMedium,
-          ).pb(10),
-          SizedBox(
-            height: 110,
-            child: ListView.separated(
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.person_2_outlined,
+            ),
+          ),
+        ],
+      ),
+      drawer: const Drawer(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 05.fh,
+            ),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Good Morning, ",
+                    style: context.textTheme.headlineMedium,
+                  ),
+                  TextSpan(
+                    text: "Shrijal",
+                    style: context.textTheme.headlineMedium!
+                        .copyWith(color: context.color.primaryColor),
+                  ),
+                ],
+              ),
+            ).pb(8),
+            Text(
+              "What would you like to have today?",
+              style: context.textTheme.headlineLarge,
+            ).pb(24),
+            const SearchBar().pb(24),
+            Text(
+              "Categories",
+              style: context.textTheme.headlineMedium,
+            ).pb(10),
+            SizedBox(
+              height: 110,
+              child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return CategoryCard(
+                        label: "Momo", imgPath: AssetPaths.burger, id: index);
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(
+                        width: 16,
+                      ),
+                  itemCount: 5),
+            ).pb(16),
+            Text(
+              "Featured Items",
+              style: context.textTheme.headlineMedium,
+            ).pb(10),
+            SizedBox(
+              height: 36.fh,
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return CategoryCard(
-                      label: "Momo", imgPath: AssetPaths.burger, id: index);
+                  return FeaturedItemCard(
+                    id: index,
+                    itemName: "Jhol Momo",
+                    imgPath: AssetPaths.jholMomo,
+                    price: "250",
+                    timeForPrep: "15-20 mins",
+                    tags: const [
+                      "Momo",
+                      "Chicken",
+                      "Nepali Food",
+                    ],
+                    rating: "4.5",
+                    noOfRating: "23",
+                  );
                 },
                 separatorBuilder: (context, index) => const SizedBox(
-                      width: 16,
-                    ),
-                itemCount: 5),
-          ).pb(16),
-          Text(
-            "Featured Items",
-            style: context.textTheme.headlineMedium,
-          ).pb(10),
-          SizedBox(
-            height: 36.fh,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return FeaturedItemCard(
-                  id: index,
-                  itemName: "Jhol Momo",
-                  imgPath: AssetPaths.jholMomo,
-                  price: "250",
-                  timeForPrep: "15-20 mins",
-                  tags: const [
-                    "Momo",
-                    "Chicken",
-                    "Nepali Food",
-                  ],
-                  rating: "4.5",
-                  noOfRating: "23",
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                width: 16,
+                  width: 16,
+                ),
+                itemCount: 5,
               ),
-              itemCount: 5,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
-      ).ph(16),
+            const SizedBox(
+              height: 20,
+            )
+          ],
+        ).ph(16),
+      ),
     );
   }
 }

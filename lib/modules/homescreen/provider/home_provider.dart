@@ -14,6 +14,16 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool onHomeScreen = false;
+  checkIfOnHomeScreen() {
+    onHomeScreen = selectedIndex == 0;
+    if (!onHomeScreen) {
+      selectedIndex = 0;
+    }
+    
+    notifyListeners();
+  }
+
   List<Category> categoryList = List.generate(
     5,
     (index) => Category(
