@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
 import 'package:foodit/core/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 ///[ItemList] curates item based on the category.
 class ItemList extends StatelessWidget {
@@ -52,10 +53,14 @@ class ItemCard extends StatelessWidget {
     required this.name,
     required this.id,
     required this.price,
+    this.noOfRating,
+    this.rating,
   });
   final String name;
   final int id;
   final String price;
+  final String? noOfRating;
+  final String? rating;
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +79,67 @@ class ItemCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 4,
-                  child: Hero(
-                    tag: "item-img-$id",
-                    child: Image.asset(
-                      AssetPaths.jholMomo,
-                      fit: BoxFit.cover,
-                      width: double.maxFinite,
-                    ),
+                  child: Stack(
+                    children: [
+                      Hero(
+                        tag: "item-img-$id",
+                        child: Image.asset(
+                          AssetPaths.jholMomo,
+                          fit: BoxFit.cover,
+                          width: double.maxFinite,
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        left: 8,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color:
+                                context.color.backgroundColor.withOpacity(.8),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                rating ?? "4.5",
+                                style: context.textTheme.bodyMedium!
+                                    .copyWith(color: context.color.darkGrey),
+                              ),
+                              Icon(
+                                Icons.star,
+                                color: context.color.secondaryColor,
+                                size: 16,
+                              ).ph(4),
+                              Text(
+                                noOfRating ?? "(25+)",
+                                style: context.textTheme.bodySmall!
+                                    .copyWith(color: context.color.lightGrey),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          top: 0,
+                          right: 8,
+                          child: IconButton(
+                            onPressed: () {
+                              context.read<ItemCardProvider>().onFav(
+                                  context.read<ItemCardProvider>().isFav);
+                            },
+                            icon: Consumer<ItemCardProvider>(
+                              builder: (context, provider, child) => Icon(
+                                Icons.favorite,
+                                color: provider.isFav
+                                    ? context.color.primaryColor
+                                    : context.color.backgroundColor,
+                              ),
+                            ),
+                          ))
+                    ],
                   ),
                 ),
                 Expanded(
@@ -114,5 +173,13 @@ class ItemCard extends StatelessWidget {
             ),
           )),
     );
+  }
+}
+
+class ItemCardProvider extends ChangeNotifier {
+  bool isFav = false;
+  void onFav(bool value) {
+    isFav = !value;
+    notifyListeners();
   }
 }
