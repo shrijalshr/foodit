@@ -59,6 +59,12 @@ class AppTheme {
       fontWeight: FontWeight.w600,
       color: AppColor.light.darkGrey,
     ),
+    headlineSmall: GoogleFonts.poppins(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: AppColor.light.darkGrey,
+      
+    ),
     displayLarge: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -69,6 +75,12 @@ class AppTheme {
       height: 1.5,
       fontWeight: FontWeight.w500,
       color: AppColor.light.darkGrey,
+    ),
+    bodyLarge: GoogleFonts.poppins(
+      fontSize: 14,
+      height: 1.5,
+      fontWeight: FontWeight.w400,
+      color: AppColor.light.lightGrey,
     ),
     bodyMedium: GoogleFonts.poppins(
       fontSize: 12,
@@ -94,6 +106,12 @@ class AppTheme {
       fontWeight: FontWeight.w400,
       color: AppColor.light.darkGrey,
     ),
+    titleSmall: GoogleFonts.poppins(
+      fontSize: 12,
+      height: 1.5,
+      fontWeight: FontWeight.w400,
+      color: AppColor.light.darkGrey,
+    ),
     labelLarge: GoogleFonts.poppins(
       fontSize: 16,
       height: 1.5,
@@ -102,6 +120,12 @@ class AppTheme {
     ),
     labelMedium: GoogleFonts.poppins(
       fontSize: 14,
+      height: 1.5,
+      fontWeight: FontWeight.w600,
+      color: AppColor.light.lightGrey,
+    ),
+    labelSmall: GoogleFonts.poppins(
+      fontSize: 12,
       height: 1.5,
       fontWeight: FontWeight.w600,
       color: AppColor.light.lightGrey,
