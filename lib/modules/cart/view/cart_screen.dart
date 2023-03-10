@@ -5,18 +5,17 @@ import 'package:foodit/widgets/dash_container.dart';
 import '../widget/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key, this.showAppBar = false});
-  final bool showAppBar;
+  const CartScreen({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar
-          ? AppBar(
-              title: const Text(
-                "My Cart",
-              ),
-            )
-          : null,
+      appBar: AppBar(
+        title: const Text(
+          "My Cart",
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
