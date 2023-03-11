@@ -29,6 +29,7 @@ class CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 width: 100,
@@ -41,7 +42,7 @@ class CategoryCard extends StatelessWidget {
                 ).pb(8),
               ),
               SizedBox(
-                height: 15,
+                // height: 20,
                 child: Text(
                   label,
                   textAlign: TextAlign.center,
