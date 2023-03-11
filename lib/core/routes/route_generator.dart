@@ -5,6 +5,7 @@ import 'package:foodit/modules/auth/register/view/register_screen.dart';
 import 'package:foodit/modules/homescreen/view/homescreen.dart';
 import 'package:foodit/modules/item_detail/view/item_detail.dart';
 import 'package:foodit/modules/item_list/view/item_list.dart';
+import 'package:foodit/modules/my_order/view/my_order_screen.dart';
 
 class RouteGenerator {
   RouteGenerator._();
@@ -32,6 +33,11 @@ class RouteGenerator {
       case Routes.itemList:
         return getPage(
           const ItemList(),
+        );
+
+      case Routes.myOrder:
+        return getPage(
+          const MyOrderScreen(),
         );
 
       default:
