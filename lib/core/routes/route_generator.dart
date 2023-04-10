@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodit/core/routes/routes.dart';
 import 'package:foodit/modules/auth/login/view/login_screen.dart';
 import 'package:foodit/modules/auth/register/view/register_screen.dart';
+import 'package:foodit/modules/favorite/view/favorite_screen.dart';
 import 'package:foodit/modules/homescreen/view/homescreen.dart';
 import 'package:foodit/modules/item_detail/view/item_detail.dart';
 import 'package:foodit/modules/item_list/view/item_list.dart';
@@ -38,6 +39,10 @@ class RouteGenerator {
       case Routes.myOrder:
         return getPage(
           const MyOrderScreen(),
+        );
+      case Routes.favorites:
+        return getPage(
+          const FavoriteScreen(),
         );
 
       default:
