@@ -94,11 +94,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: "Email",
                     prefixIcon: const Icon(Icons.person_outline),
                   ).pb(20),
-                  const PasswordField().pb(16),
+                  PasswordField(
+                    validator: (value) {
+                      if (value == null || value.trim() == "") {
+                        return "Please enter your password.";
+                      }
+
+                      return null;
+                    },
+                  ).pb(16),
                   AppButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {}
-                            Navigator.pushNamed(context, Routes.homescreen);
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(context, Routes.homescreen);
+                            }
                           },
                           label: "Login")
                       .pb(8),
@@ -150,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: color.mistGrey, elevation: 0),
+                        backgroundColor: color.white, elevation: 0),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
