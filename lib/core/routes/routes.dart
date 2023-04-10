@@ -7,4 +7,5 @@ class Routes {
   static const String itemDetail = "/item-detail";
   static const String itemList = "/item-list";
   static const String myOrder = "/my_order";
+  static const String favorites = "/favorites";
 }
