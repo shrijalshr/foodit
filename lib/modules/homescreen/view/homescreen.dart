@@ -10,15 +10,17 @@ import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/search_bar.dart';
-import '../widgets/category_card.dart';
-import '../widgets/featured_item_card.dart';
+import '../widgets/categories_carousel.dart';
+import '../widgets/featured_item_carousel.dart';
+import '../widgets/greeting_text.dart';
+import '../widgets/homescreen_text.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   static const List<Widget> navIconList = [
     Icon(Icons.home_outlined, size: 24),
-    Icon(Icons.search_outlined, size: 24),
+    Icon(Icons.explore_outlined, size: 24),
     Icon(Icons.shopping_cart_outlined, size: 24),
     Icon(Icons.favorite_outline, size: 24),
   ];
@@ -99,11 +101,13 @@ class HomeScreenBody extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Image.asset(
-              AssetPaths.momo,
+              AssetPaths.defaultAvatar,
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              _advancedDrawerController.hideDrawer();
+            },
             leading: const Icon(Icons.home),
             title: const Text('Home'),
           ),
@@ -120,7 +124,9 @@ class HomeScreenBody extends StatelessWidget {
             title: const Text('My Orders'),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, Routes.favorites);
+            },
             leading: const Icon(Icons.favorite),
             title: const Text('Favourites'),
           ),
@@ -179,91 +185,11 @@ class HomeScreenBody extends StatelessWidget {
               SizedBox(
                 height: 05.fh,
               ),
-              StreamBuilder<DateTime>(
-                  stream: context.read<HomeProvider>().getTime(),
-                  builder: ((context, snapshot) {
-                    String message = '';
-                    int hours = snapshot.hasData ? snapshot.data!.hour : 0;
-                    print(hours);
-                    if (hours >= 0 && hours < 12) {
-                      message = "Good Morning🌄, ";
-                    } else if (hours >= 12 && hours < 16) {
-                      message = "Good Afternoon🌞, ";
-                    } else if (hours >= 16 && hours < 21) {
-                      message = "Good Evening🌇, ";
-                    } else if (hours >= 21 && hours < 24) {
-                      message = "Good Night🌛, ";
-                    }
-                    return Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: message,
-                            style: context.textTheme.headlineMedium,
-                          ),
-                          TextSpan(
-                            text: " Shrijal",
-                            style: context.textTheme.headlineMedium!
-                                .copyWith(color: context.color.primaryColor),
-                          ),
-                        ],
-                      ),
-                    ).pb(8);
-                  })),
-              Text(
-                "What would you like to have today?",
-                style: context.textTheme.headlineLarge,
-              ).pb(24),
+              const GreetingText(),
+              const HomeScreenText().pb(24),
               const SearchBar().pb(24),
-              Text(
-                "Categories",
-                style: context.textTheme.headlineMedium,
-              ).pb(10),
-              SizedBox(
-                height: 120,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return CategoryCard(
-                          label: "Momo", imgPath: AssetPaths.burger, id: index);
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                          width: 16,
-                        ),
-                    itemCount: 5),
-              ).pb(16),
-              Text(
-                "Featured Items",
-                style: context.textTheme.headlineMedium,
-              ).pb(10),
-              SizedBox(
-                height: 36.fh,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return FeaturedItemCard(
-                      id: index,
-                      itemName: "Jhol Momo",
-                      imgPath: AssetPaths.jholMomo,
-                      price: "250",
-                      timeForPrep: "15-20 mins",
-                      tags: const [
-                        "Momo",
-                        "Chicken",
-                        "Nepali Food",
-                      ],
-                      rating: "4.5",
-                      noOfRating: "23",
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(
-                    width: 16,
-                  ),
-                  itemCount: 5,
-                ),
-              ),
+              const CategoriesCarousel(),
+              const FeaturedItemCarousel(),
               const SizedBox(
                 height: 20,
               )
