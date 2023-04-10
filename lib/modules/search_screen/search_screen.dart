@@ -10,9 +10,12 @@ class SearchBarDelegate extends SearchDelegate {
     foodList = [
       "Momo",
       "Chowmein",
+      "Pizza",
+      "Chop Suey",
       "Burger",
       "Coffee",
       "Americano",
+      "Potato Spiral",
       "Water",
       "Pasta",
       "Sandwich"
@@ -30,8 +33,6 @@ class SearchBarDelegate extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-
     return IconButton(
       tooltip: 'Back',
       icon: AnimatedIcon(
@@ -40,14 +41,16 @@ class SearchBarDelegate extends SearchDelegate {
       ),
       onPressed: () {
         //Take control back to previous page
+
         close(context, null);
+        Navigator.of(context).pop();
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
+    // TODO: implement buildResults after integrating API
     return Center(
       child: SizedBox(
         width: 100.0,
@@ -70,7 +73,7 @@ class SearchBarDelegate extends SearchDelegate {
       final result = element.toLowerCase();
       return result.contains(queryStr);
     }).toList();
-
+//TODO: UI change
     return ListView.builder(
         itemCount: suggestions.length,
         itemBuilder: (context, index) => ListTile(
