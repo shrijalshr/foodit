@@ -50,7 +50,7 @@ class CartItemTile extends StatelessWidget {
                     name,
                     style: context.textTheme.displayLarge,
                   ).pb(4),
-                  Row(
+                  Row(  
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
