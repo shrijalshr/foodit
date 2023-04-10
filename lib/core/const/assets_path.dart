@@ -6,6 +6,7 @@ class AssetPaths {
 
   static const String googleLogo = "$_iconPath/google.png";
   static const String bg = "$_imagePath/bg.jpg";
+  static const String defaultAvatar = "$_imagePath/avatar.jpg";
   static const String hookah = "$_imagePath/hookah.jpg";
   static const String hotdog = "$_imagePath/hotdog.jpg";
   static const String jholMomo = "$_imagePath/jhol-momo.jpg";
