@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:foodit/core/responsive/screen_util.dart';
 import 'package:foodit/core/routes/route_generator.dart';
 import 'package:foodit/core/theme/app_theme.dart';
-import 'package:foodit/modules/auth/login/view/login_screen.dart';
 import 'package:foodit/modules/cart/provider/cart_provider.dart';
 import 'package:foodit/modules/homescreen/provider/home_provider.dart';
+import 'package:foodit/modules/homescreen/view/homescreen.dart';
 import 'package:foodit/modules/item_detail/provider/item_detail_provider.dart';
 import 'package:foodit/modules/item_list/provider/item_provider.dart';
 import 'package:foodit/modules/item_list/view/item_list.dart';
@@ -22,6 +22,7 @@ void main() {
 
     statusBarColor: Colors.transparent, // status bar color
   ));
+  //the app shall only support portrait orientation in upside direction.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(const MyApp());
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'FoodIt',
         theme: AppTheme.lightTheme,
-        home: const LoginScreen(),
+        home: HomeScreen(),
         onGenerateRoute: (settings) => RouteGenerator.getRoute(settings),
       ),
     );
