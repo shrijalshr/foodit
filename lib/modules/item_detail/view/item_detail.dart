@@ -38,6 +38,7 @@ class ItemDetailScreen extends StatelessWidget {
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Hero(
@@ -161,12 +162,17 @@ class ItemDetailScreen extends StatelessWidget {
                               .map((e) => ItemTag(tagName: e).pr(10).pb(8))
                               .toList(),
                         ).pb(8),
+
+                        ///TODO: Add Addons Section
+                        // Text("Add Extra",
+                        //         style: context.textTheme.displayMedium)
+                        //     .pb(16),
                       ],
                     ),
                   ).ph(16),
                 ),
                 const SizedBox(
-                  height: 52,
+                  height: 60,
                 )
               ],
             ),
