@@ -70,9 +70,7 @@ class HomeScreenBody extends StatelessWidget {
   final _advancedDrawerController = AdvancedDrawerController();
 
   void _handleMenuButtonPressed() {
-    // NOTICE: Manage Advanced Drawer state through the Controller.
-    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
-    _advancedDrawerController.showDrawer();
+    _advancedDrawerController.toggleDrawer();
   }
 
   @override
@@ -89,7 +87,6 @@ class HomeScreenBody extends StatelessWidget {
           child: Column(
         children: [
           Container(
-            // width: 128.0,
             height: 128.0,
             margin: const EdgeInsets.only(
               top: 24.0,
@@ -182,17 +179,13 @@ class HomeScreenBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 05.fh,
-              ),
+              SizedBox(height: 05.fh),
               const GreetingText(),
               const HomeScreenText().pb(24),
               const SearchBar().pb(24),
               const CategoriesCarousel(),
               const FeaturedItemCarousel(),
-              const SizedBox(
-                height: 20,
-              )
+              const SizedBox(height: 20)
             ],
           ).ph(16),
         ),
