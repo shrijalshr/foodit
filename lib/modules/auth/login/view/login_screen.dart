@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
 import 'package:foodit/core/routes/routes.dart';
-import 'package:foodit/widgets/app_button.dart';
-import 'package:foodit/widgets/my_textfield.dart';
-import 'package:foodit/widgets/password_field/password_field.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:foodit/utils/widgets/app_button.dart';
+import 'package:foodit/utils/widgets/my_textfield.dart';
 
 import '../../../../core/theme/app_color.dart';
 
@@ -61,17 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 80,
+                  SizedBox(
+                    height: 30.fh,
                   ),
-                  Text(
-                    "Foodit",
-                    style: GoogleFonts.berkshireSwash(
-                        textStyle: TextStyle(
-                      color: color.primaryColor,
-                      fontSize: 48,
-                    )),
-                  ).pb(24),
+                  Image.asset(AssetPaths.googleLogo).pb(16),
                   Text(
                     "Welcome to FoodIt",
                     style: textTheme.headlineLarge,
@@ -84,25 +75,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   MyTextField(
                     validator: (value) {
                       if (value == null || value.trim() == "") {
-                        return "Please enter your email";
+                        return "Please enter your mobile number.";
                       }
-                      if (!value.isEmail()) {
-                        return "Please enter valid email";
+                      if (!value.isMobileNum()) {
+                        return "Please enter valid mobile number.";
                       }
                       return null;
                     },
-                    label: "Email",
-                    prefixIcon: const Icon(Icons.person_outline),
+                    label: "Mobile number",
+                    prefixIcon: const Icon(Icons.phone_android_outlined),
                   ).pb(20),
-                  PasswordField(
-                    validator: (value) {
-                      if (value == null || value.trim() == "") {
-                        return "Please enter your password.";
-                      }
-
-                      return null;
-                    },
-                  ).pb(16),
                   AppButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
@@ -111,73 +93,63 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           label: "Login")
                       .pb(8),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      "Forgot your password?",
-                      style: textTheme.bodyMedium?.apply(
-                        color: color.primaryColor,
-                        fontWeightDelta: 400,
-                      ),
-                    ),
-                  ).pb(24),
-                  GestureDetector(
-                    onTap: () {},
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Don't have an account? ",
-                            style: textTheme.bodyMedium?.apply(
-                              fontWeightDelta: 400,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "Register now",
-                            style: textTheme.bodyMedium?.apply(
-                              fontWeightDelta: 400,
-                              color: color.primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ).pb(24),
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(),
-                      ),
-                      Text(
-                        "OR",
-                        style: textTheme.bodyLarge?.apply(
-                            color: color.mistGrey, fontWeightDelta: 300),
-                      ).ph(8),
-                      const Expanded(child: Divider())
-                    ],
-                  ).pb(8),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: color.white, elevation: 0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            AssetPaths.googleLogo,
-                            height: 24,
-                          ).pr(16),
-                          Text(
-                            "Sign in with Google",
-                            style: textTheme.labelMedium,
-                          )
-                        ],
-                      ),
-                    ),
-                  ).pb(24),
+                  // GestureDetector(
+                  //   onTap: () {},
+                  //   child: RichText(
+                  //     text: TextSpan(
+                  //       children: [
+                  //         TextSpan(
+                  //           text: "Don't have an account? ",
+                  //           style: textTheme.bodyMedium?.apply(
+                  //             fontWeightDelta: 400,
+                  //           ),
+                  //         ),
+                  //         TextSpan(
+                  //           text: "Register now",
+                  //           style: textTheme.bodyMedium?.apply(
+                  //             fontWeightDelta: 400,
+                  //             color: color.primaryColor,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ).pb(24),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     const Expanded(
+                  //       child: Divider(),
+                  //     ),
+                  //     Text(
+                  //       "OR",
+                  //       style: textTheme.bodyLarge?.apply(
+                  //           color: color.mistGrey, fontWeightDelta: 300),
+                  //     ).ph(8),
+                  //     const Expanded(child: Divider())
+                  //   ],
+                  // ).pb(8),
+                  // ElevatedButton(
+                  //   onPressed: () {},
+                  //   style: ElevatedButton.styleFrom(
+                  //       backgroundColor: color.white, elevation: 0),
+                  //   child: Container(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: 16, vertical: 12),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Image.asset(
+                  //           AssetPaths.googleLogo,
+                  //           height: 24,
+                  //         ).pr(16),
+                  //         Text(
+                  //           "Sign in with Google",
+                  //           style: textTheme.labelMedium,
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ).pb(24),
                 ],
               ).ph(24),
             ),
