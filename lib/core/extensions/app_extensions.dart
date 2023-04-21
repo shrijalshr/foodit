@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:foodit/core/api/api_endpoints.dart';
 import 'package:foodit/core/theme/app_color.dart';
 import 'package:intl/intl.dart';
 
@@ -91,6 +92,16 @@ extension PasswordValidation on String {
     if (!contains(RegExp(r"[0-9]"))) return false;
     if (!contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) return false;
     return true;
+  }
+}
+
+extension TextExtension on String {
+  String img() {
+    if (contains(ApiEndPoints.IMG_URL)) {
+      return this;
+    } else {
+      return ApiEndPoints.IMG_URL + this;
+    }
   }
 }
 
