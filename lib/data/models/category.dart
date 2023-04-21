@@ -1,59 +1,44 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// To parse this JSON data, do
+//
+//     final categoryModel = categoryModelFromJson(jsonString);
+
 import 'dart:convert';
 
-class Category {
-  int id;
-  String name;
-  String imgPath;
-  Category({
-    required this.id,
-    required this.name,
-    required this.imgPath,
-  });
+List<CategoryModel> categoryModelFromJson(String str) => List<CategoryModel>.from(json.decode(str).map((x) => CategoryModel.fromJson(x)));
 
-  Category copyWith({
-    int? id,
-    String? name,
-    String? imgPath,
-  }) {
-    return Category(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      imgPath: imgPath ?? this.imgPath,
+String categoryModelToJson(List<CategoryModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class CategoryModel {
+    CategoryModel({
+        this.id,
+        this.name,
+        this.image,
+    });
+
+    final int? id;
+    final String? name;
+    final String? image;
+
+    CategoryModel copyWith({
+        int? id,
+        String? name,
+        String? image,
+    }) => 
+        CategoryModel(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            image: image ?? this.image,
+        );
+
+    factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+        id: json["id"],
+        name: json["name"],
+        image: json["image"],
     );
-  }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'imgPath': imgPath,
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "image": image,
     };
-  }
-
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      imgPath: map['imgPath'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Category.fromJson(String source) =>
-      Category.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() => 'Category(id: $id, name: $name, imgPath: $imgPath)';
-
-  @override
-  bool operator ==(covariant Category other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id && other.name == name && other.imgPath == imgPath;
-  }
-
-  @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ imgPath.hashCode;
 }
