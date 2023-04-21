@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "542521113627",
+    "project_id": "foodit-8ec9b",
+    "storage_bucket": "foodit-8ec9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542521113627:android:3276262c188ee6bb104cbe",
+        "android_client_info": {
+          "package_name": "com.shrijalshr.foodit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542521113627-kuuvks11etio94fr5dji9m7rsgl2k7pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz-njxId2IgCkM6kZGTzul9gB4HHkzjtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542521113627-kuuvks11etio94fr5dji9m7rsgl2k7pj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542521113627:android:1d9ac0bdf48f92f9104cbe",
+        "android_client_info": {
+          "package_name": "com.shrijalshr.foodit.foodit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542521113627-kuuvks11etio94fr5dji9m7rsgl2k7pj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz-njxId2IgCkM6kZGTzul9gB4HHkzjtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542521113627-kuuvks11etio94fr5dji9m7rsgl2k7pj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

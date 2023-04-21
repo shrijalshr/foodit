@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodit/core/responsive/screen_util.dart';
 import 'package:foodit/core/routes/route_generator.dart';
 import 'package:foodit/core/theme/app_theme.dart';
+import 'package:foodit/modules/auth/login/view/login_screen.dart';
 import 'package:foodit/modules/cart/provider/cart_provider.dart';
 import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:foodit/modules/homescreen/view/homescreen.dart';
@@ -10,13 +12,18 @@ import 'package:foodit/modules/item_detail/provider/item_detail_provider.dart';
 import 'package:foodit/modules/item_list/provider/item_provider.dart';
 import 'package:foodit/modules/item_list/view/item_list.dart';
 import 'package:foodit/modules/my_order/provider/my_order_provider.dart';
-import 'package:foodit/widgets/password_field/password_provider.dart';
+import 'package:foodit/modules/settings/provider/profile_form_provider.dart';
+import 'package:foodit/utils/widgets/password_field/password_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'modules/cart/widget/cart_item.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.transparent, // navigation bar color
 
@@ -60,12 +67,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => MyOrderProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ProfileFormProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FoodIt',
         theme: AppTheme.lightTheme,
-        home: HomeScreen(),
+        home: const LoginScreen(),
         onGenerateRoute: (settings) => RouteGenerator.getRoute(settings),
       ),
     );
