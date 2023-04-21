@@ -8,4 +8,7 @@ class Routes {
   static const String itemList = "/item-list";
   static const String myOrder = "/my_order";
   static const String favorites = "/favorites";
+  static const String profile = "/profile";
+  static const String profileForm = "/profile-form";
+  static const String orderConfirmation = "/order-confirmation";
 }
