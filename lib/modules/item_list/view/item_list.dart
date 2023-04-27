@@ -1,80 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
 import 'package:foodit/core/routes/routes.dart';
+import 'package:foodit/data/models/item_model.dart';
+import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
 ///[ItemList] curates item based on the category.
 class ItemList extends StatelessWidget {
-  const ItemList({super.key});
-
+  const ItemList({super.key, required this.item});
+  final List<ItemModel> item;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Momo"),
-      ),
-      body: GridView.builder(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 4,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 19,
-        ),
-        physics: const BouncingScrollPhysics(),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return ItemCard(
-            id: index,
-            name: "Chicken Jhol Momo",
-            price: "250",
+    return item.isEmpty
+        ? const CircularProgressIndicator()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text("${item[0].catName}"),
+            ),
+            body: Consumer<HomeProvider>(
+              builder: (context, provider, child) => GridView.builder(
+                scrollDirection: Axis.vertical,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3 / 4,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 19,
+                ),
+                physics: const BouncingScrollPhysics(),
+                itemCount: provider.catItemList.length,
+                itemBuilder: (context, index) {
+                  final ItemModel item = provider.catItemList[index];
+                  return ItemCard(
+                    item: item,
+                  );
+                },
+              ),
+            ),
           );
-        },
-      ),
-    );
   }
 }
 
 class ItemCard extends StatelessWidget {
   const ItemCard({
     super.key,
-    required this.name,
-    required this.id,
-    required this.price,
-    this.noOfRating,
-    this.rating,
+    required this.item,
   });
-  final String name;
-  final int id;
-  final String price;
-  final String? noOfRating;
-  final String? rating;
-
+  final ItemModel item;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.itemDetail, arguments: id);
+        Navigator.pushNamed(context, Routes.itemDetail, arguments: item);
       },
       child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Container(
+            height: 200,
             width: double.maxFinite,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: context.color.white),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
                   flex: 3,
                   child: Stack(
                     children: [
                       Hero(
-                        tag: "item-img-$id",
-                        child: Image.asset(
-                          AssetPaths.jholMomo,
+                        tag: "item-img-${item.id}",
+                        child: Image.network(
+                          "${item.image?.img()}",
                           fit: BoxFit.cover,
                           width: double.maxFinite,
                         ),
@@ -94,8 +92,8 @@ class ItemCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                rating ?? "4.5",
-                                style: context.textTheme.bodyMedium!
+                                "4.5",
+                                style: context.textStyles.bodyMedium!
                                     .copyWith(color: context.color.darkGrey),
                               ),
                               Icon(
@@ -104,8 +102,8 @@ class ItemCard extends StatelessWidget {
                                 size: 16,
                               ).ph(4),
                               Text(
-                                noOfRating ?? "(25+)",
-                                style: context.textTheme.bodySmall!
+                                "(25+)",
+                                style: context.textStyles.bodySmall!
                                     .copyWith(color: context.color.lightGrey),
                               )
                             ],
@@ -143,16 +141,16 @@ class ItemCard extends StatelessWidget {
                         flex: 2,
                         fit: FlexFit.loose,
                         child: Text(
-                          name,
-                          style: context.textTheme.bodyMedium!.apply(
+                          "${item.name}",
+                          style: context.textStyles.bodyMedium!.apply(
                               fontWeightDelta: 500,
                               color: context.color.darkGrey),
                         ),
                       ),
                       Flexible(
                         child: Text(
-                          "Rs. $price",
-                          style: context.textTheme.titleMedium!
+                          "Rs. ${item.price}",
+                          style: context.textStyles.titleMedium!
                               .apply(fontWeightDelta: 500),
                         ),
                       ),

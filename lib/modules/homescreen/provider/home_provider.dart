@@ -1,19 +1,38 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:foodit/core/const/assets_path.dart';
-import 'package:foodit/modules/search_screen/search_screen.dart';
+import 'package:foodit/data/models/item_model.dart';
+import 'package:foodit/services/home_screen_service.dart';
 
 import '../../../data/models/category.dart';
+import '../../../data/models/user_model.dart';
+import '../../../utils/helper/sp.dart';
 
 class HomeProvider with ChangeNotifier {
+  void initS() {
+    getUser();
+    getCategories();
+    getAllItems();
+    getFeaturedItems();
+  }
 
+  UserModel? user;
+  getUser() async {
+    String? userStr = await getStringFromSP("user");
+    if (userStr != null) {
+      Map<String, dynamic> userMap = jsonDecode(userStr);
+      user = UserModel.fromMap(userMap);
+    }
+    notifyListeners();
+  }
+
+  bool isLoading = false;
+
+  List<ItemModel> favItems = [];
 
   int selectedIndex = 0;
   onNavTap(BuildContext context, int index) {
-    if (index == 1) {
-      showSearch(context: context, delegate: SearchBarDelegate());
-    }
     selectedIndex = index;
     notifyListeners();
   }
@@ -27,16 +46,46 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Category> categoryList = List.generate(
-    5,
-    (index) => Category(
-        id: index, imgPath: AssetPaths.frenchFries, name: "French Fries"),
-  );
+  List<CategoryModel> categoryList = [];
+  Future<void> getCategories() async {
+    isLoading = true;
+    HomeScreenService service = HomeScreenService();
+    await service.getCategoryList().then(
+      (value) {
+        categoryList = service.catList;
+      },
+    );
+    // print(categoryList[0].name);
+    isLoading = false;
 
-  bool isFav = false;
-  void onFav(bool value) {
-    isFav = !value;
     notifyListeners();
+  }
+
+  List<ItemModel> itemList = [];
+  Future<void> getAllItems() async {
+    HomeScreenService service = HomeScreenService();
+    await service.getItemList();
+    itemList = service.itemList;
+    notifyListeners();
+  }
+
+  List<ItemModel> featuredItemList = [];
+  Future<void> getFeaturedItems() async {
+    isLoading = true;
+    HomeScreenService service = HomeScreenService();
+    await service.getFeaturedItems();
+    featuredItemList = service.featuredItemList;
+    isLoading = false;
+    notifyListeners();
+  }
+
+  List<ItemModel> catItemList = [];
+  Future<bool?> getCategoryItems(int id) async {
+    HomeScreenService service = HomeScreenService();
+    bool? isSuccess = await service.getCatItems(id);
+    catItemList = service.catItemList;
+    notifyListeners();
+    return isSuccess;
   }
 
   DateTime now1 = DateTime.now();
@@ -48,7 +97,5 @@ class HomeProvider with ChangeNotifier {
     });
     String message = '';
     yield* timer;
-  
   }
-
 }

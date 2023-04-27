@@ -1,24 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:foodit/core/const/assets_path.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
+import 'package:foodit/data/models/item_model.dart';
+import 'package:foodit/modules/cart/provider/order_provider.dart';
 import 'package:foodit/modules/item_detail/provider/item_detail_provider.dart';
-import 'package:foodit/widgets/app_button.dart';
+import 'package:foodit/utils/widgets/app_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/routes/routes.dart';
 import '../../homescreen/widgets/item_tag.dart';
 
 class ItemDetailScreen extends StatelessWidget {
-  const ItemDetailScreen({super.key, this.id, this.itemName, this.price});
+  const ItemDetailScreen({super.key, required this.item});
 
-  final int? id;
-  final String? itemName;
-  final String? price;
+  final ItemModel item;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.color.white,
-      appBar: AppBar(title: const Text("Jhol Momo"), actions: [
+      appBar: AppBar(title: Text("${item.name}"), actions: [
         IconButton(
           onPressed: () {
             context
@@ -42,15 +43,15 @@ class ItemDetailScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Hero(
-                  tag: "item-img-$id",
+                  tag: "item-img-${item.id}",
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
                     child: Container(
                       height: 48.fh,
                       width: double.maxFinite,
                       decoration: const BoxDecoration(),
-                      child: Image.asset(
-                        AssetPaths.jholMomo,
+                      child: CachedNetworkImage(
+                        imageUrl: item.image!.img(),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -69,10 +70,10 @@ class ItemDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Hero(
-                          tag: "item-name-$itemName-$id",
+                          tag: "item-name-${item.name}-${item.id}",
                           child: Text(
-                            "Chicken Jhol Momo ",
-                            style: context.textTheme.headlineLarge,
+                            "${item.name}",
+                            style: context.textStyles.headlineLarge,
                             overflow: TextOverflow.visible,
                             maxLines: null,
                             softWrap: true,
@@ -83,7 +84,7 @@ class ItemDetailScreen extends StatelessWidget {
                           children: [
                             Text(
                               "4.5",
-                              style: context.textTheme.bodyMedium!
+                              style: context.textStyles.bodyMedium!
                                   .copyWith(color: context.color.darkGrey),
                             ),
                             Icon(
@@ -93,14 +94,14 @@ class ItemDetailScreen extends StatelessWidget {
                             ).ph(4),
                             Text(
                               "(25+)",
-                              style: context.textTheme.bodySmall!
+                              style: context.textStyles.bodySmall!
                                   .copyWith(color: context.color.lightGrey),
                             ).pr(4),
                             GestureDetector(
                               onTap: () {},
                               child: Text(
                                 "See Reviews",
-                                style: context.textTheme.bodySmall!.apply(
+                                style: context.textStyles.bodySmall!.apply(
                                     color: context.color.primaryColor,
                                     decoration: TextDecoration.underline),
                               ),
@@ -111,8 +112,8 @@ class ItemDetailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Rs. 250",
-                              style: context.textTheme.headlineLarge
+                              "Rs. ${item.price}",
+                              style: context.textStyles.headlineLarge
                                   ?.copyWith(color: context.color.primaryColor),
                             ),
                             SizedBox(
@@ -131,7 +132,7 @@ class ItemDetailScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     "${context.watch<ItemDetailProvider>().noOfItem}",
-                                    style: context.textTheme.displayLarge,
+                                    style: context.textStyles.displayLarge,
                                   ),
                                   IconButton(
                                     icon: Icon(
@@ -150,14 +151,12 @@ class ItemDetailScreen extends StatelessWidget {
                           ],
                         ).pb(8),
                         Text(
-                          "Jhol Momo refers to momos drowned in a bowl of hot, liquid chutney. ",
-                          style: context.textTheme.bodyMedium,
+                          "${item.desc}",
+                          style: context.textStyles.bodyMedium,
                         ).pb(4),
                         Wrap(
                           children: [
-                            "Momo",
-                            "Chicken",
-                            "Warm",
+                            "${item.catName}",
                           ]
                               .map((e) => ItemTag(tagName: e).pr(10).pb(8))
                               .toList(),
@@ -183,7 +182,11 @@ class ItemDetailScreen extends StatelessWidget {
               right: 0,
               child: AppButton(
                 label: "Add to Cart",
-                onPressed: () {},
+                onPressed: () {
+                  int qty = context.read<ItemDetailProvider>().noOfItem;
+                  context.read<OrderProvider>().addToCart(item, qty);
+                  Navigator.pushNamed(context, Routes.cart);
+                },
               ).p(16, 16, 0, 8))
         ],
       ),

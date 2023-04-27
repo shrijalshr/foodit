@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodit/core/export.dart';
+import 'package:foodit/modules/auth/login/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
-import '../../../core/theme/app_color.dart';
-import '../../../widgets/app_button.dart';
-import '../../../widgets/otp_field.dart';
-import '../provider/otp_provider.dart';
+import '../../../utils/widgets/app_button.dart';
+import '../../../utils/widgets/otp_field.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key, required this.email});
-  final String email;
+  const OTPVerificationScreen({super.key, required this.number});
+  final String number;
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
 }
@@ -19,6 +18,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
   late TextEditingController optController2;
   late TextEditingController optController3;
   late TextEditingController optController4;
+  late TextEditingController optController5;
+  late TextEditingController optController6;
   late AnimationController _animationController;
   late Animation<Duration> _timerAnimation;
 
@@ -29,6 +30,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
     optController2 = TextEditingController();
     optController3 = TextEditingController();
     optController4 = TextEditingController();
+    optController5 = TextEditingController();
+    optController6 = TextEditingController();
     _animationController = AnimationController(
         vsync: this, duration: const Duration(seconds: 120));
 
@@ -50,8 +53,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
   @override
   Widget build(BuildContext context) {
     print("build");
-    final OTPProvider provider = Provider.of<OTPProvider>(context);
-    final AppColor color = Theme.of(context).extension<AppColor>()!;
+    final AuthProvider provider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("OTP Verification"),
@@ -73,10 +76,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
-                      ?.apply(color: color.lightGrey),
+                      ?.apply(color: context.color.lightGrey),
                 ),
                 TextSpan(
-                    text: widget.email,
+                    text: widget.number,
                     style: Theme.of(context).textTheme.titleMedium)
               ])).pb(16),
           Row(
@@ -89,26 +92,38 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
                 validator: (value) {
                   return null;
                 },
-              ).pr(15)),
+              ).pr(5)),
               Expanded(
                   child: OtpField(
                       textEditingController: optController2,
                       validator: (value) {
                         return null;
-                      }).pr(15)),
+                      }).pr(5)),
               Expanded(
                   child: OtpField(
                       textEditingController: optController3,
                       validator: (value) {
                         return null;
-                      }).pr(15)),
+                      }).pr(5)),
               Expanded(
                   child: OtpField(
                 textEditingController: optController4,
                 validator: (value) {
                   return null;
                 },
-              ).pr(15)),
+              ).pr(5)),
+              Expanded(
+                  child: OtpField(
+                      textEditingController: optController5,
+                      validator: (value) {
+                        return null;
+                      }).pr(5)),
+              Expanded(
+                  child: OtpField(
+                      textEditingController: optController6,
+                      validator: (value) {
+                        return null;
+                      }).pr(5)),
             ],
           ).pb(16),
           Row(
@@ -123,20 +138,21 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Text(
                           'Expires in $minutes:$seconds',
-                          style: context.textTheme.displayMedium,
+                          style: context.textStyles.displayMedium,
                         ));
                   }),
               GestureDetector(
                 onTap: () {
-                  _animationController.reset();
-                  _animationController.forward();
+                  // provider.sendVerificationCode(widget.number);
+                  // _animationController.reset();
+                  // _animationController.forward();
                 },
                 child: Text(
                   "Re-send Code",
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium
-                      ?.apply(color: color.primaryColor),
+                      ?.apply(color: context.color.primaryColor),
                 ),
               )
             ],
@@ -146,8 +162,11 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen>
                 String otp = optController1.text +
                     optController2.text +
                     optController3.text +
-                    optController4.text;
+                    optController4.text +
+                    optController5.text +
+                    optController6.text;
                 print(otp);
+                // provider.signInWithSmsCode(otp);
               },
               label: "Continue"),
         ],

@@ -7,9 +7,9 @@ import 'package:foodit/core/routes/routes.dart';
 import 'package:foodit/modules/cart/view/cart_screen.dart';
 import 'package:foodit/modules/favorite/view/favorite_screen.dart';
 import 'package:foodit/modules/homescreen/provider/home_provider.dart';
+import 'package:foodit/modules/profile/view/profile_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../../../widgets/search_bar.dart';
+import '../../../utils/widgets/search_bar.dart';
 import '../widgets/categories_carousel.dart';
 import '../widgets/featured_item_carousel.dart';
 import '../widgets/greeting_text.dart';
@@ -20,16 +20,16 @@ class HomeScreen extends StatelessWidget {
 
   static const List<Widget> navIconList = [
     Icon(Icons.home_outlined, size: 24),
-    Icon(Icons.explore_outlined, size: 24),
-    Icon(Icons.shopping_cart_outlined, size: 24),
     Icon(Icons.favorite_outline, size: 24),
+    Icon(Icons.shopping_cart_outlined, size: 24),
+    Icon(Icons.person_2_outlined, size: 24),
   ];
 
   final List<Widget> pages = [
-    HomeScreenBody(),
-    const SizedBox(),
+    const HomeScreenBody(),
+    const FavoriteScreen(),
     const CartScreen(),
-    const FavoriteScreen()
+    const ProfileScreen(),
   ];
 
   //State class
@@ -62,11 +62,16 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class HomeScreenBody extends StatelessWidget {
-  HomeScreenBody({
+class HomeScreenBody extends StatefulWidget {
+  const HomeScreenBody({
     super.key,
   });
 
+  @override
+  State<HomeScreenBody> createState() => _HomeScreenBodyState();
+}
+
+class _HomeScreenBodyState extends State<HomeScreenBody> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   void _handleMenuButtonPressed() {
@@ -74,7 +79,19 @@ class HomeScreenBody extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<HomeProvider>().initS();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final HomeProvider provider = Provider.of<HomeProvider>(
+      context,
+    );
     return AdvancedDrawer(
       backdropColor: context.color.white,
       controller: _advancedDrawerController,
@@ -109,7 +126,9 @@ class HomeScreenBody extends StatelessWidget {
             title: const Text('Home'),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacementNamed(context, Routes.profile);
+            },
             leading: const Icon(Icons.account_circle_rounded),
             title: const Text('Profile'),
           ),
@@ -128,7 +147,9 @@ class HomeScreenBody extends StatelessWidget {
             title: const Text('Favourites'),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacementNamed(context, Routes.profileForm);
+            },
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
           ),
@@ -142,7 +163,8 @@ class HomeScreenBody extends StatelessWidget {
       )),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("FoodIt"),
+          title: Image.asset(AssetPaths.logoName, height: 12.fh),
+          centerTitle: true,
           leading: IconButton(
             onPressed: _handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
@@ -165,29 +187,34 @@ class HomeScreenBody extends StatelessWidget {
                 Icons.notifications_outlined,
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.person_2_outlined,
-              ),
-            ),
           ],
         ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 05.fh),
-              const GreetingText(),
-              const HomeScreenText().pb(24),
-              const SearchBar().pb(24),
-              const CategoriesCarousel(),
-              const FeaturedItemCarousel(),
-              const SizedBox(height: 20)
-            ],
-          ).ph(16),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            context.read<HomeProvider>().initS();
+          },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: provider.isLoading
+                ? const CircularProgressIndicator()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 05.fh),
+                      const GreetingText(),
+                      const HomeScreenText().pb(24),
+                      const SearchBar().pb(24),
+                      CategoriesCarousel(
+                        categories: provider.categoryList,
+                      ),
+                      FeaturedItemCarousel(
+                        featuredItems: provider.featuredItemList,
+                      ),
+                      const SizedBox(height: 20)
+                    ],
+                  ).ph(16),
+          ),
         ),
       ),
     );

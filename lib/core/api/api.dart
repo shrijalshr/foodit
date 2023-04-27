@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:foodit/core/api/api_endpoints.dart';
 import 'package:foodit/core/api/api_exceptions.dart';
+import 'package:foodit/utils/helper/custom_snackbars.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,22 +19,23 @@ class ApiService {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     accessToken = localStorage.getString('accessToken');
     print("accessToken from getAccessToken: \t $accessToken");
+    return accessToken;
   }
 
-  Future<http.Response> postAuthData(data, apiUrl) async {
-    var url = baseUrl + apiUrl;
+  Future<http.Response?> postAuthData(data, apiUrl) async {
+    // var url = ApiEndPoints.GET_URL + apiUrl;
     await getAccessToken();
     try {
       var response = await http
-          .post(Uri.parse(url),
+          .post(Uri.http(ApiEndPoints.GET_URL, apiUrl),
               body: jsonEncode(data), headers: setAuthHeaders())
           .timeout(timeOutDuration);
       return response;
     } on SocketException {
-      throw FetchDataException('No Internet connection', url.toString());
+      throw FetchDataException('No Internet connection', apiUrl.toString());
     } on TimeoutException {
       throw ApiNotRespondingException(
-          'API not responded in time', url.toString());
+          'API not responded in time', apiUrl.toString());
     }
   }
 
@@ -61,11 +63,13 @@ class ApiService {
     }
   }
 
-  Future<http.Response> getData(apiUrl) async {
+Future<http.Response?> getData(apiUrl,
+      [Map<String, dynamic>? queryParam]) async {
     var url = baseUrl + apiUrl;
     try {
       var response = await http
-          .get(Uri.parse(url), headers: _setHeaders())
+          .get(Uri.http(ApiEndPoints.GET_URL, "/api/$apiUrl", queryParam),
+              headers: _setHeaders())
           .timeout(timeOutDuration);
       return (response);
     } on SocketException {
@@ -73,7 +77,11 @@ class ApiService {
     } on TimeoutException {
       throw ApiNotRespondingException(
           'API not responded in time', url.toString());
+    } catch (e) {
+      print(e);
+      errorSnackbar("Something went wrong", "Please try again later");
     }
+    return null;
   }
 
   // getWithParams(data, apiUrl) async {
@@ -132,11 +140,16 @@ class ApiService {
         'X-Content-Type-Options': 'nosniff',
         'Referrer-Policy': 'same-origin',
         'Cross-Origin-Opener-Policy': 'same-origin',
+        "Connection": "Keep-Alive",
+        "Keep-Alive": "timeout=5, max=1000",
       };
 
   _setHeaders() => {
         'Content-type': 'application/json',
         'Accept': 'application/vnd.api+json',
+        "Connection": "Keep-Alive",
+        "Keep-Alive": "timeout=5, max=1000",
+
         // 'xpsu': '12345678'
       };
 
@@ -145,7 +158,9 @@ class ApiService {
         'Accept': 'application/vnd.api+json',
         'xpsu': '12345678',
         'Authorization': 'Bearer $accessToken',
-        'Charset': 'utf-8'
+        'Charset': 'utf-8',
+        "Connection": "Keep-Alive",
+        "Keep-Alive": "timeout=5, max=1000",
       };
 
   // _returnResponse(http.Response response) {

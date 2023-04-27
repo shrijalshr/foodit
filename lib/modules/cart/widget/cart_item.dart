@@ -1,40 +1,43 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:foodit/data/models/item_model.dart';
+
 import '../../../core/export.dart';
-import '../../../widgets/dash_container.dart';
+import '../../../utils/widgets/dash_container.dart';
 
 class CartItemTile extends StatelessWidget {
   const CartItemTile({
-    super.key,
-    required this.name,
-    required this.id,
-    required this.price,
-    required this.category,
-    required this.imgPath,
-  });
-  final int id;
-  final String name;
-  final String price;
-  final String category;
-  final String imgPath;
+    Key? key,
+    required this.item,
+    required this.qty,
+    this.incr,
+    this.decr,
+  }) : super(key: key);
+  final ItemModel item;
+  final int qty;
+  final void Function()? incr;
+  final void Function()? decr;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.itemDetail, arguments: id);
+        Navigator.pushNamed(context, Routes.itemDetail, arguments: item);
       },
       child: DashContainer(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Hero(
-                tag: "item-img-$id",
+                tag: "item-img-${item.id}",
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    imgPath,
+                  child: CachedNetworkImage(
+                    imageUrl: item.image!.img(),
                     fit: BoxFit.cover,
                     height: 12.fh,
                   ),
@@ -42,15 +45,16 @@ class CartItemTile extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
-                    style: context.textTheme.displayLarge,
+                    "${item.name}",
+                    style: context.textStyles.displayLarge,
                   ).pb(4),
-                  Row(  
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -58,12 +62,12 @@ class CartItemTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            category,
-                            style: context.textTheme.bodyMedium,
+                            "${item.catName}",
+                            style: context.textStyles.bodyMedium,
                           ).pb(8),
                           Text(
-                            "Rs. $price",
-                            style: context.textTheme.displayLarge,
+                            "Rs. ${item.price}",
+                            style: context.textStyles.displayLarge,
                           ),
                         ],
                       ),
@@ -77,23 +81,18 @@ class CartItemTile extends StatelessWidget {
                                 Icons.remove_circle_outline,
                                 color: context.color.primaryColor,
                               ),
-                              onPressed: () {
-                                context.read<CartItemProvider>().dcrItem();
-                              },
+                              onPressed: decr,
                             ),
                             Text(
-                              "${context.watch<CartItemProvider>().noOfItem}",
-                              style: context.textTheme.displayLarge,
+                              "$qty",
+                              style: context.textStyles.displayLarge,
                             ),
                             IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                color: context.color.primaryColor,
-                              ),
-                              onPressed: () {
-                                context.read<CartItemProvider>().incItem();
-                              },
-                            ),
+                                icon: Icon(
+                                  Icons.add_circle,
+                                  color: context.color.primaryColor,
+                                ),
+                                onPressed: incr),
                           ],
                         ),
                       )
@@ -106,19 +105,5 @@ class CartItemTile extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CartItemProvider extends ChangeNotifier {
-  int noOfItem = 1;
-  void incItem() {
-    noOfItem++;
-    notifyListeners();
-  }
-
-  void dcrItem() {
-    if (noOfItem == 1) return;
-    noOfItem--;
-    notifyListeners();
   }
 }

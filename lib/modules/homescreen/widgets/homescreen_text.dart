@@ -10,7 +10,7 @@ class HomeScreenText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "What would you like to have today?",
-      style: context.textTheme.headlineLarge,
+      style: context.textStyles.headlineLarge,
     );
   }
 }

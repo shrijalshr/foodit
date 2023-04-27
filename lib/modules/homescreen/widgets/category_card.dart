@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodit/core/extensions/app_extensions.dart';
 import 'package:foodit/core/routes/routes.dart';
+import 'package:foodit/data/models/item_model.dart';
+import 'package:foodit/modules/homescreen/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -17,13 +21,23 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.itemList);
+      onTap: () async {
+        await context
+            .read<HomeProvider>()
+            .getCategoryItems(id)
+            .then((isSuccess) {
+          if (context.mounted) {
+            List<ItemModel> itemList = context.read<HomeProvider>().catItemList;
+            print(itemList);
+            Navigator.pushNamed(context, Routes.categoryScreen,
+                arguments: itemList);
+          }
+        });
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          width: 100,
+          width: 120,
           decoration: BoxDecoration(
             color: context.color.white,
             borderRadius: BorderRadius.circular(8),
@@ -34,23 +48,23 @@ class CategoryCard extends StatelessWidget {
               SizedBox(
                 width: 100,
                 height: 80,
-                child: Image.asset(
-                  imgPath,
+                child: CachedNetworkImage(
+                  imageUrl: imgPath.img(),
                   width: 100,
                   height: 80,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                 ).pb(8),
               ),
-              SizedBox(
+              Flexible(
                 // height: 20,
                 child: Text(
                   label,
                   textAlign: TextAlign.center,
-                  style: context.textTheme.displayMedium
+                  style: context.textStyles.displayMedium
                       ?.copyWith(color: context.color.lightGrey),
                   maxLines: 2,
                   overflow: TextOverflow.clip,
-                ),
+                ).pb(2),
               ),
             ],
           ),

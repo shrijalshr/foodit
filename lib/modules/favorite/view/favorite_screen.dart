@@ -25,11 +25,10 @@ class FavoriteScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: 10,
         itemBuilder: (context, index) {
-          return ItemCard(
-            id: index,
-            name: "Chicken Jhol Momo",
-            price: "250",
-          );
+          return const SizedBox();
+          //     return ItemCard(
+          //  item: item,
+          //     );
         },
       ),
     );

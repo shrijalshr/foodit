@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:foodit/core/routes/routes.dart';
 import 'package:foodit/data/models/item_model.dart';
+import 'package:foodit/data/models/user_model.dart';
 import 'package:foodit/modules/auth/login/view/login_screen.dart';
-import 'package:foodit/modules/auth/register/view/register_screen.dart';
+
+import 'package:foodit/modules/cart/view/cart_screen.dart';
+import 'package:foodit/modules/check_out/view/check_out_screen.dart';
+import 'package:foodit/modules/check_out/view/maps_view.dart';
 import 'package:foodit/modules/favorite/view/favorite_screen.dart';
 import 'package:foodit/modules/homescreen/view/homescreen.dart';
 import 'package:foodit/modules/item_detail/view/item_detail.dart';
-import 'package:foodit/modules/item_list/view/item_list.dart';
 import 'package:foodit/modules/my_order/view/my_order_screen.dart';
 import 'package:foodit/modules/order_confirmation/view/order_confirmation_screen.dart';
+import 'package:foodit/modules/otp/view/otp_verification_view.dart';
 import 'package:foodit/modules/profile/view/profile_screen.dart';
 import 'package:foodit/modules/settings/view/profile_form.dart';
+
+import '../../modules/item_list/view/item_list.dart';
+import '../../utils/widgets/category/view/category_screen.dart';
 
 class RouteGenerator {
   RouteGenerator._();
@@ -23,8 +30,10 @@ class RouteGenerator {
       case Routes.login:
         return getPage(const LoginScreen());
 
-      case Routes.register:
-        return getPage(const RegisterScreen());
+      case Routes.otpScreen:
+        return getPage(OTPVerificationScreen(
+          number: settings.arguments as String,
+        ));
 
       case Routes.homescreen:
         return getPage(HomeScreen());
@@ -32,13 +41,16 @@ class RouteGenerator {
       case Routes.itemDetail:
         return getPage(
           ItemDetailScreen(
-          item: settings.arguments as ItemModel,
+            item: settings.arguments as ItemModel,
           ),
         );
       case Routes.itemList:
         return getPage(
           const ItemList(),
         );
+
+      case Routes.checkOut:
+        return getPage(const CheckOutScreen());
 
       case Routes.myOrder:
         return getPage(
@@ -47,6 +59,23 @@ class RouteGenerator {
       case Routes.favorites:
         return getPage(
           const FavoriteScreen(),
+        );
+
+      case Routes.categoryScreen:
+        final List<ItemModel> items = settings.arguments as List<ItemModel>;
+        return getPage(
+          CategoryItemScreen(
+            items: items,
+          ),
+        );
+
+      case Routes.map:
+        return getPage(
+          const MapsView(),
+        );
+      case Routes.cart:
+        return getPage(
+          const CartScreen(),
         );
 
       case Routes.profile:
@@ -59,8 +88,11 @@ class RouteGenerator {
           const OrderConfirmationScreen(),
         );
       case Routes.profileForm:
+        final UserModel? user = settings.arguments as UserModel?;
         return getPage(
-          const ProfileForm(),
+          ProfileForm(
+            userModel: user,
+          ),
         );
       default:
         return getPage(const LoginScreen());

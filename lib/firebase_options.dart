@@ -44,40 +44,41 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxkVB3B31uLFTt6qcVeHhXE2TT4sBdpz0',
-    appId: '1:542521113627:web:47ad3ec1e17ba97e104cbe',
-    messagingSenderId: '542521113627',
-    projectId: 'foodit-8ec9b',
-    authDomain: 'foodit-8ec9b.firebaseapp.com',
-    storageBucket: 'foodit-8ec9b.appspot.com',
-    measurementId: 'G-VP21K61RX8',
+    apiKey: 'AIzaSyCrTbLhjokmGam_NNcUA6a5I4ukroFMvgs',
+    appId: '1:725677244060:web:eddd7dbd3bf034791ef759',
+    messagingSenderId: '725677244060',
+    projectId: 'foodit-380509',
+    authDomain: 'foodit-380509.firebaseapp.com',
+    storageBucket: 'foodit-380509.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCz-njxId2IgCkM6kZGTzul9gB4HHkzjtQ',
-    appId: '1:542521113627:android:1d9ac0bdf48f92f9104cbe',
-    messagingSenderId: '542521113627',
-    projectId: 'foodit-8ec9b',
-    storageBucket: 'foodit-8ec9b.appspot.com',
+    apiKey: 'AIzaSyBRhEy35LjLh2GyTBtAYGkhRKIuwoiGi0g',
+    appId: '1:725677244060:android:abec04a0015ffc2a1ef759',
+    messagingSenderId: '725677244060',
+    projectId: 'foodit-380509',
+    storageBucket: 'foodit-380509.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBNvh6reKUyhMTwxe3NE5dGwatObtHS01M',
-    appId: '1:542521113627:ios:e83f7ba97e23194d104cbe',
-    messagingSenderId: '542521113627',
-    projectId: 'foodit-8ec9b',
-    storageBucket: 'foodit-8ec9b.appspot.com',
-    iosClientId: '542521113627-ncqk6r4f7cr9mtqo80ic25avtp9em01g.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDhI6ksQfX3cSV4RkXaUYThfTpT-rlPoGk',
+    appId: '1:725677244060:ios:e65b9bd44711fd0e1ef759',
+    messagingSenderId: '725677244060',
+    projectId: 'foodit-380509',
+    storageBucket: 'foodit-380509.appspot.com',
+    androidClientId: '725677244060-hm2obpk3bpre17245960omepmoatbhnn.apps.googleusercontent.com',
+    iosClientId: '725677244060-9ucciial5qhdjbe87h3p8r4blbcar15k.apps.googleusercontent.com',
     iosBundleId: 'com.shrijalshr.foodit.foodit',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBNvh6reKUyhMTwxe3NE5dGwatObtHS01M',
-    appId: '1:542521113627:ios:e83f7ba97e23194d104cbe',
-    messagingSenderId: '542521113627',
-    projectId: 'foodit-8ec9b',
-    storageBucket: 'foodit-8ec9b.appspot.com',
-    iosClientId: '542521113627-ncqk6r4f7cr9mtqo80ic25avtp9em01g.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDhI6ksQfX3cSV4RkXaUYThfTpT-rlPoGk',
+    appId: '1:725677244060:ios:e65b9bd44711fd0e1ef759',
+    messagingSenderId: '725677244060',
+    projectId: 'foodit-380509',
+    storageBucket: 'foodit-380509.appspot.com',
+    androidClientId: '725677244060-hm2obpk3bpre17245960omepmoatbhnn.apps.googleusercontent.com',
+    iosClientId: '725677244060-9ucciial5qhdjbe87h3p8r4blbcar15k.apps.googleusercontent.com',
     iosBundleId: 'com.shrijalshr.foodit.foodit',
   );
 }

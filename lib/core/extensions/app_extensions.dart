@@ -108,7 +108,8 @@ extension TextExtension on String {
 extension MobileValidation on String {
   bool isMobileNum() {
     if (length != 10) return false;
-    if (!startsWith('98') || !startsWith('97')) return false;
+
+    if (!startsWith('98') && !startsWith('97')) return false;
     return true;
   }
 
@@ -120,12 +121,17 @@ extension MobileValidation on String {
   }
 }
 
+extension TypeConverter on String {
+  int? toInt() => int.tryParse(this);
+  double? toDouble() => double.tryParse(this);
+}
+
 extension NumberValidation on String {
   //TODO: Add isNaN method later
 }
 
 extension ContextExtention on BuildContext {
-  TextTheme get textTheme => Theme.of(this).textTheme;
+  TextTheme get textStyles => Theme.of(this).textTheme;
   AppColor get color => Theme.of(this).extension<AppColor>() ?? AppColor.light;
 }
 

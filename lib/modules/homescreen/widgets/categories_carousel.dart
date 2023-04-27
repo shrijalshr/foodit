@@ -24,7 +24,7 @@ class CategoriesCarousel extends StatelessWidget {
       children: [
         Text(
           "Categories",
-          style: context.textTheme.headlineMedium,
+          style: context.textStyles.headlineMedium,
         ).pb(10),
         Consumer<HomeProvider>(
           builder: (context, value, child) => SizedBox(

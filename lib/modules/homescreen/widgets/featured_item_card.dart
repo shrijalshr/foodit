@@ -1,23 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:foodit/core/extensions/app_extensions.dart';
-import 'package:foodit/core/routes/routes.dart';
-import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'package:foodit/core/extensions/app_extensions.dart';
+import 'package:foodit/modules/homescreen/provider/home_provider.dart';
 
 import 'item_tag.dart';
 
 class FeaturedItemCard extends StatelessWidget {
   const FeaturedItemCard({
-    super.key,
+    Key? key,
+    required this.id,
+    required this.imgPath,
     required this.itemName,
     required this.price,
     this.timeForPrep,
     required this.tags,
     this.rating,
     this.noOfRating,
-    required this.id,
-    required this.imgPath,
-  });
+    this.isFav = false,
+    this.onFav,
+  }) : super(key: key);
 
   final int id;
   final String imgPath;
@@ -27,143 +31,135 @@ class FeaturedItemCard extends StatelessWidget {
   final List<String> tags;
   final String? rating;
   final String? noOfRating;
-
+  final bool? isFav;
+  final void Function()? onFav;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.itemDetail, arguments: id);
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          width: 36.fh,
-          height: 36.fh,
-          decoration: BoxDecoration(
-            color: context.color.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 36.fh,
-                    height: 20.fh,
-                    child: Hero(
-                      tag: "item-img-$id",
-                      child: Image.asset(
-                        imgPath,
-                        fit: BoxFit.cover,
-                      ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        width: 36.fh,
+        height: 36.fh,
+        decoration: BoxDecoration(
+          color: context.color.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  width: 36.fh,
+                  height: 20.fh,
+                  child: Hero(
+                    tag: "item-img-$id",
+                    child: CachedNetworkImage(
+                      imageUrl: imgPath.img(),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    top: 8,
-                    left: 8,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: context.color.backgroundColor.withOpacity(.8),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            rating ?? "4.5",
-                            style: context.textTheme.bodyMedium!
-                                .copyWith(color: context.color.darkGrey),
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: context.color.secondaryColor,
-                            size: 16,
-                          ).ph(4),
-                          Text(
-                            noOfRating ?? "(25+)",
-                            style: context.textTheme.bodySmall!
-                                .copyWith(color: context.color.lightGrey),
-                          )
-                        ],
-                      ),
+                ),
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: context.color.backgroundColor.withOpacity(.8),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                  Positioned(
-                      top: 0,
-                      right: 8,
-                      child: IconButton(
-                        onPressed: () {
-                          context
-                              .read<HomeProvider>()
-                              .onFav(context.read<HomeProvider>().isFav);
-                        },
-                        icon: Consumer<HomeProvider>(
-                          builder: (context, provider, child) => Icon(
-                            Icons.favorite,
-                            color: provider.isFav
-                                ? context.color.primaryColor
-                                : context.color.backgroundColor,
-                          ),
-                        ),
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: 16.fh,
-                width: double.maxFinite,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
-                          child: Tooltip(
-                            message: itemName,
-                            child: Hero(
-                              tag: "item-name-$itemName-$id",
-                              child: Text(
-                                itemName,
-                                style: context.textTheme.displayLarge,
-                                overflow: TextOverflow.ellipsis,
-                              ).pv(8),
-                            ),
-                          ),
-                        ),
                         Text(
-                          "Rs. $price",
-                          style: context.textTheme.displayLarge,
+                          rating ?? "4.5",
+                          style: context.textStyles.bodyMedium!
+                              .copyWith(color: context.color.darkGrey),
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: context.color.secondaryColor,
+                          size: 16,
+                        ).ph(4),
+                        Text(
+                          noOfRating ?? "(25+)",
+                          style: context.textStyles.bodySmall!
+                              .copyWith(color: context.color.lightGrey),
                         )
                       ],
                     ),
-                    if (timeForPrep != null)
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.timer_rounded,
-                            color: context.color.primaryColor,
-                            size: 20,
-                          ).pr(4),
-                          Text(
-                            timeForPrep ?? "Unknown",
-                            style: context.textTheme.bodySmall,
-                          ).pr(10),
-                        ],
-                      ).pb(8),
-                    Wrap(
-                      children: tags.map((e) => ItemTag(tagName: e)).toList(),
-                    )
-                  ],
+                  ),
                 ),
-              ).ph(16)
-            ],
-          ),
+                Positioned(
+                    top: 0,
+                    right: 8,
+                    child: IconButton(
+                      onPressed: onFav,
+                      icon: Consumer<HomeProvider>(
+                        builder: (context, provider, child) => Icon(
+                          Icons.favorite,
+                          color: isFav ?? false
+                              ? context.color.primaryColor
+                              : context.color.backgroundColor,
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: 16.fh,
+              width: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Flexible(
+                        child: Tooltip(
+                          message: itemName,
+                          child: Hero(
+                            tag: "item-name-$itemName-$id",
+                            child: Text(
+                              itemName,
+                              style: context.textStyles.displayLarge,
+                              overflow: TextOverflow.ellipsis,
+                            ).pv(8),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Rs. $price",
+                        style: context.textStyles.displayLarge,
+                      )
+                    ],
+                  ),
+                  if (timeForPrep != null)
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.timer_rounded,
+                          color: context.color.primaryColor,
+                          size: 20,
+                        ).pr(4),
+                        Text(
+                          timeForPrep ?? "Unknown",
+                          style: context.textStyles.bodySmall,
+                        ).pr(10),
+                      ],
+                    ).pb(8),
+                  Wrap(
+                    children: tags.map((e) => ItemTag(tagName: e)).toList(),
+                  )
+                ],
+              ),
+            ).ph(16)
+          ],
         ),
       ),
     );

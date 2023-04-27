@@ -11,6 +11,7 @@ class GreetingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeProvider provider = Provider.of<HomeProvider>(context);
     return StreamBuilder<DateTime>(
         stream: context.read<HomeProvider>().getTime(),
         builder: ((context, snapshot) {
@@ -32,11 +33,11 @@ class GreetingText extends StatelessWidget {
               children: [
                 TextSpan(
                   text: message,
-                  style: context.textTheme.headlineMedium,
+                  style: context.textStyles.headlineMedium,
                 ),
                 TextSpan(
-                  text: " Shrijal",
-                  style: context.textTheme.headlineMedium!
+                  text: provider.user?.name ?? " Shrijal",
+                  style: context.textStyles.headlineMedium!
                       .copyWith(color: context.color.primaryColor),
                 ),
               ],

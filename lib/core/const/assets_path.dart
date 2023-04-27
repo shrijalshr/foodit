@@ -3,6 +3,12 @@ class AssetPaths {
 
   static const String _iconPath = "assets/icons";
   static const String _imagePath = "assets/images";
+  static const String _logoPath = "assets/logos";
+
+  static const String logo = "$_logoPath/logo.png";
+  static const String logoName = "$_logoPath/logoName.png";
+  static const String logoWithName = "$_logoPath/logoWithName.png";
+  static const String logoIcon = "$_logoPath/logoOnly.png";
 
   static const String googleLogo = "$_iconPath/google.png";
   static const String bg = "$_imagePath/bg.jpg";

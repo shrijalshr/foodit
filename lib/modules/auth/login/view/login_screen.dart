@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodit/core/const/assets_path.dart';
-import 'package:foodit/core/extensions/app_extensions.dart';
-import 'package:foodit/core/routes/routes.dart';
-import 'package:foodit/utils/widgets/app_button.dart';
-import 'package:foodit/utils/widgets/my_textfield.dart';
+import 'package:foodit/core/export.dart';
+import 'package:foodit/modules/auth/login/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../core/theme/app_color.dart';
+import '../../../../data/models/user_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,14 +14,26 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  late TextEditingController mobileController;
+
+  @override
+  void initState() {
+    mobileController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    mobileController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final AppColor color =
-        Theme.of(context).extension<AppColor>() ?? AppColor.light;
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final AuthProvider provider = Provider.of(context);
+
     return Scaffold(
-      backgroundColor: color.backgroundColor,
+      backgroundColor: context.color.backgroundColor,
       appBar: null,
       body: Stack(
         children: [
@@ -32,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             top: -20,
             child: CircleAvatar(
               radius: 60,
-              backgroundColor: color.primaryColor,
+              backgroundColor: context.color.primaryColor,
             ),
           ),
           Positioned(
@@ -40,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             top: 200,
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: color.primaryColor,
+              backgroundColor: context.color.primaryColor,
             ),
           ),
           Positioned(
@@ -48,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
             bottom: 80,
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: color.primaryColor,
+              backgroundColor: context.color.primaryColor,
             ),
           ),
           SingleChildScrollView(
@@ -62,37 +72,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 30.fh,
                   ),
-                  Image.asset(AssetPaths.googleLogo).pb(16),
+                  Image.asset(AssetPaths.logo).pb(16),
                   Text(
                     "Welcome to FoodIt",
-                    style: textTheme.headlineLarge,
+                    style: context.textStyles.headlineLarge,
                   ).pb(8),
                   Text(
                     "Order your food with ease",
-                    style: textTheme.bodyMedium
-                        ?.apply(color: color.lightGrey, fontWeightDelta: 300),
+                    style: context.textStyles.bodyMedium?.apply(
+                        color: context.color.lightGrey, fontWeightDelta: 300),
                   ).pb(24),
-                  MyTextField(
-                    validator: (value) {
-                      if (value == null || value.trim() == "") {
-                        return "Please enter your mobile number.";
-                      }
-                      if (!value.isMobileNum()) {
-                        return "Please enter valid mobile number.";
-                      }
-                      return null;
-                    },
-                    label: "Mobile number",
-                    prefixIcon: const Icon(Icons.phone_android_outlined),
-                  ).pb(20),
-                  AppButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.pushNamed(context, Routes.homescreen);
-                            }
-                          },
-                          label: "Login")
-                      .pb(8),
+                  // MyTextField(
+                  //   textController: mobileController,
+                  //   validator: (value) {
+                  //     if (value == null || value.trim() == "") {
+                  //       return "Please enter your mobile number.";
+                  //     }
+                  //     if (!value.isMobileNum()) {
+                  //       return "Please enter valid mobile number.";
+                  //     }
+                  //     return null;
+                  //   },
+                  //   label: "Mobile number",
+                  //   inputType: TextInputType.phone,
+                  //   prefixIcon: const Icon(Icons.phone_android_outlined),
+                  // ).pb(20),
+                  // AppButton(
+                  //         onPressed: () {
+                  //           if (_formKey.currentState!.validate()) {
+                  //             String number =
+                  //                 "+977${mobileController.text.trim()}";
+                  //             // provider.sendVerificationCode(number);
+                  //             Navigator.pushNamed(context, Routes.otpScreen,
+                  //                 arguments: number);
+                  //           }
+                  //         },
+                  //         label: "Login")
+                  //     .pb(8),
                   // GestureDetector(
                   //   onTap: () {},
                   //   child: RichText(
@@ -100,15 +116,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   //       children: [
                   //         TextSpan(
                   //           text: "Don't have an account? ",
-                  //           style: textTheme.bodyMedium?.apply(
+                  //           style: context.textTheme.bodyMedium?.apply(
                   //             fontWeightDelta: 400,
                   //           ),
                   //         ),
                   //         TextSpan(
                   //           text: "Register now",
-                  //           style: textTheme.bodyMedium?.apply(
+                  //           style: context.textTheme.bodyMedium?.apply(
                   //             fontWeightDelta: 400,
-                  //             color: color.primaryColor,
+                  //             color: context.color.primaryColor,
                   //           ),
                   //         ),
                   //       ],
@@ -122,34 +138,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   //     ),
                   //     Text(
                   //       "OR",
-                  //       style: textTheme.bodyLarge?.apply(
-                  //           color: color.mistGrey, fontWeightDelta: 300),
+                  //       style: context.textTheme.bodyLarge?.apply(
+                  //           color: context.color.mistGrey,
+                  //           fontWeightDelta: 300),
                   //     ).ph(8),
                   //     const Expanded(child: Divider())
                   //   ],
                   // ).pb(8),
-                  // ElevatedButton(
-                  //   onPressed: () {},
-                  //   style: ElevatedButton.styleFrom(
-                  //       backgroundColor: color.white, elevation: 0),
-                  //   child: Container(
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 16, vertical: 12),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Image.asset(
-                  //           AssetPaths.googleLogo,
-                  //           height: 24,
-                  //         ).pr(16),
-                  //         Text(
-                  //           "Sign in with Google",
-                  //           style: textTheme.labelMedium,
-                  //         )
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ).pb(24),
+                  ElevatedButton(
+                    onPressed: () async {
+                      provider.signInWithGoogle(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: context.color.white, elevation: 0),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            AssetPaths.googleLogo,
+                            height: 24,
+                          ).pr(16),
+                          Text(
+                            "Sign in with Google",
+                            style: context.textStyles.labelMedium,
+                          )
+                        ],
+                      ),
+                    ),
+                  ).pb(24),
                 ],
               ).ph(24),
             ),
